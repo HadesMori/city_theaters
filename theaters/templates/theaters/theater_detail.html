@@ -1,0 +1,25 @@
+{% extends "theaters/base.html" %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'theaters/performance_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="theater-detail">
+    <h1>{{ theater.name }}</h1>
+    <p><strong>Адреса:</strong> {{ theater.address }}</p>
+    <p><strong>Телефон:</strong> {{ theater.phone_number }}</p>
+    <p><strong>Пошта:</strong> {{ theater.email }}</p>
+    <p><strong>Опис:</strong> {{ theater.description }}</p>
+
+    <h2>Вистави в цьому театрі:</h2>
+    <ul>
+        {% for performance in theater.performances.all %}
+            <li>
+                <a href="{% url 'performance_detail' performance.pk %}">{{ performance.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}

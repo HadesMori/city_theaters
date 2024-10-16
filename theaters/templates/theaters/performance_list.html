@@ -1,0 +1,44 @@
+{% extends "theaters/base.html" %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/performance_list.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="filters-container">
+        <form method="GET">
+            <input type="text" id="genre" name="genre" placeholder="Введіть жанр" value="{{ request.GET.genre }}" class="filter-input">
+            
+            <select id="city" name="city" class="filter-select">
+                <option value="">--Оберіть місто--</option>
+                {% for address in addresses %}
+                    <option value="{{ address.city }}" {% if request.GET.city == address.city %}selected{% endif %}>
+                        {{ address.city }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select id="sort" name="sort" class="filter-select">
+                <option value="">--Виберіть--</option>
+                <option value="date" {% if request.GET.sort == 'date' %}selected{% endif %}>По даті (зростання)</option>
+                <option value="date_desc" {% if request.GET.sort == 'date_desc' %}selected{% endif %}>По даті (спадання)</option>
+            </select>
+
+            <button type="submit" class="apply-btn">Застосувати</button>
+        </form>
+    </div>
+
+    <main>
+        <ul id="performance-list">
+            {% for performance in performances %}
+                <li>
+                    <a href="{% url 'performance_detail' performance.performance_id %}">{{ performance.name }}</a>
+                    <p>{{ performance.date_time|date:"d M Y, H:i" }}</p>
+                    <p>{{ performance.theater.address.city }}</p>
+                </li>
+            {% empty %}
+                <li>Вистав немає</li>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}

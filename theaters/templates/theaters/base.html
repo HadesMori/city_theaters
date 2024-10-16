@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Театри міста{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'theaters/styles.css' %}">
+    {% block styles %}
+    
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Театри міста</h1>
+            <ul>
+                <li><a href="{% url 'performance_list' %}">Список вистав</a></li>
+                <!-- Додайте інші посилання, якщо потрібно -->
+            </ul>
+        </nav>
+    </header>
+        {% block content %}
+        <!-- Тут буде основний контент -->
+        {% endblock %}
+    <footer>
+        <p>&copy; 2024 Театри міста. Всі права захищені.</p>
+    </footer>
+</body>
+</html>
