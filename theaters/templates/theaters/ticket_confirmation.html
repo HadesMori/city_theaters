@@ -1,0 +1,28 @@
+{% extends "theaters/base.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/performance_detail.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/ticket_confirmation.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Підтвердження покупки квитка</h1>
+    <div class="ticket-info">
+        <p><strong>Місце:</strong> {{ seat.row }}-{{ seat.seat }}</p>
+        <p><strong>Статус квитка:</strong> {{ ticket.status }}</p>
+        <p><strong>Вистава:</strong> {{ seat.performance.name }}</p> <!-- Додайте назву вистави -->
+        <p><strong>Час вистави:</strong> {{ seat.performance.date_time }}</p> <!-- Додайте час вистави -->
+    </div>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Купити</button>
+    </form>
+    
+    <form method="GET" action="{% url 'select_seat' performance_id=seat.performance.performance_id %}">
+        <button type="submit" class="back-button">Повернутися до вибору місця</button>
+    </form>
+</div>
+{% endblock %}

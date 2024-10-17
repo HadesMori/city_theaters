@@ -1,0 +1,82 @@
+#seating-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.seat {
+    display: inline-block; /* Вирівнювання місць в ряд */
+    width: 30px; /* Ширина місця */
+    height: 30px; /* Висота місця */
+    border-radius: 50%; /* Круглі місця */
+    margin: 0 5px; /* Відстань між місцями */
+    text-align: center; /* Вирівнювання тексту по центру */
+    line-height: 30px; /* Вертикальне вирівнювання */
+    cursor: pointer; /* Зміна курсору для посилань */
+}
+
+.available {
+    background-color: green; /* Колір для доступних місць */
+    color: white; /* Колір тексту */
+}
+
+.booked {
+    background-color: orange; /* Колір для заброньованих місць */
+    color: white; /* Колір тексту */
+}
+
+.sold {
+    background-color: red; /* Колір для проданих місць */
+    color: white; /* Колір тексту */
+}
+
+.seat.available:hover {
+    background-color: #66bb6a;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.legend-available {
+    background-color: #4caf50;
+}
+
+.legend-sold {
+    background-color: #e74c3c;
+}
+
+a {
+    text-decoration: none;
+}

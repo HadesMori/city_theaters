@@ -16,5 +16,6 @@
         <p><strong>Дата та час:</strong> {{ performance.date_time|date:"d M Y, H:i" }}</p>
         <p><strong>Опис:</strong> {{ performance.description }}</p>
         <p><strong>Театр:</strong> <a href="{% url 'theater_detail' performance.theater.pk %}">{{ performance.theater.name }}</a></p>
+        <a href="{% url 'select_seat' performance.performance_id %}">Купити квиток
     </main>
 {% endblock %}

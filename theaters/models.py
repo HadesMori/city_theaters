@@ -91,10 +91,16 @@ class Seat(models.Model):
 
 
 class Ticket(models.Model):
+    STATUS_CHOICES = [
+        ('available', 'Available'),
+        ('booked', 'Booked'),
+        ('sold', 'Sold'),
+    ]
+        
     ticket_id = models.AutoField(primary_key=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50, db_collation='Ukrainian_CI_AS', blank=True, null=True)
-    seat = models.ForeignKey(Seat, models.CASCADE, blank=True, null=True)
+    status = models.CharField(max_length=50, choices= STATUS_CHOICES, db_collation='Ukrainian_CI_AS', blank=True, null=True)
+    seat = models.ForeignKey(Seat, models.CASCADE, blank=True, null=True, related_name='tickets')
 
     class Meta:
         db_table = 'Ticket'

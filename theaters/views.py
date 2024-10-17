@@ -1,7 +1,7 @@
 from django.views.generic import ListView, View, DetailView
 from django.utils import timezone
-from django.shortcuts import render
-from .models import Performance, Theater, Address
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Performance, Theater, Address, Seat, Ticket
 
 class PerformanceListView(View):
     def get(self, request):
@@ -69,3 +69,48 @@ class TheaterDetailView(DetailView):
     template_name = 'theaters/theater_detail.html'
     context_object_name = 'theater'
 
+def select_seat(request, performance_id):
+    performance = get_object_or_404(Performance, pk=performance_id)
+    seats = Seat.objects.filter(performance=performance).prefetch_related('tickets')
+
+    # Отримуємо унікальні номери рядів
+    row_numbers = seats.values_list('row', flat=True).distinct()
+
+    context = {
+        'performance': performance,
+        'seats': seats,
+        'row_numbers': row_numbers,
+    }
+    return render(request, 'theaters/select_seat.html', context)
+
+class TicketConfirmationView(View):
+    def get(self, request, seat_id):
+        # Отримуємо місце за ID
+        seat = get_object_or_404(Seat, seat_id=seat_id)
+        
+        # Отримуємо інформацію про квиток
+        ticket = Ticket.objects.filter(seat=seat).first()  # Логіка для отримання квитка
+
+        context = {
+            'seat': seat,
+            'ticket': ticket,
+        }
+        return render(request, 'theaters/ticket_confirmation.html', context)
+
+    def post(self, request, seat_id):
+        # Отримуємо місце за ID
+        seat = get_object_or_404(Seat, seat_id=seat_id)
+        
+        # Отримуємо квиток (може бути ваша логіка)
+        ticket = Ticket.objects.filter(seat=seat).first()  
+
+        # Обробка логіки покупки (зміна статусу квитка на 'sold', тощо)
+        if ticket:
+            ticket.status = 'sold'
+            ticket.save()
+        
+        # Отримуємо performance_id для редиректу
+        performance_id = seat.performance.performance_id  # Припустимо, що у вас є зв'язок між Seat і Performance
+
+        # Повертаємося на сторінку вибору місця з performance_id
+        return redirect('select_seat', performance_id=performance_id)  # Замініть на ваш URL для вибору місця

@@ -1,0 +1,50 @@
+{% extends "theaters/base.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/select_seat.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/performance_detail.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <h1>Select a Seat for "{{ performance.name }}"</h1>
+    <div class="legend">
+        <div class="legend-item">
+            <span class="seat available"></span>
+            <span>Доступне місце</span>
+        </div>
+        <div class="legend-item">
+            <span class="seat booked"></span>
+            <span>Зарезервоване місце</span>
+        </div>
+        <div class="legend-item">
+            <span class="seat sold"></span>
+            <span>Продане місце</span>
+        </div>
+    </div>
+
+    <div id="seating-area">
+        {% for row_num in row_numbers %}
+            <div class="row">
+                <span class="row-label">Ряд {{ row_num }}</span> <!-- Позначення ряду -->
+                {% for seat in seats %}
+                    {% if seat.row == row_num %}
+                        {% with ticket=seat.tickets.first %}
+                            <div class="seat-container">
+                                {% if ticket and ticket.status == 'sold' %}
+                                    <span class="seat sold"></span> <!-- Продане місце -->
+                                {% elif ticket and ticket.status == 'booked' %}
+                                    <span class="seat booked"></span> <!-- Заброньоване місце -->
+                                {% else %}
+                                    <a href="{% url 'ticket_confirmation' seat.seat_id %}" class="seat available">
+                                        {{ seat.seat }} <!-- Номер місця -->
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endwith %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
