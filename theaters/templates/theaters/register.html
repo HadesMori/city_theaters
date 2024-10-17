@@ -1,0 +1,25 @@
+{% extends "theaters/base.html" %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/performance_detail.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'theaters/register.css' %}"> 
+{% endblock %}
+
+{% block content %}
+    <h2>Реєстрація</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Ім'я користувача" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <input type="text" name="name" placeholder="Ваше ім'я" optional>
+        <button type="submit">Зареєструватися</button>
+    </form>
+    <div class="no-account">
+        <p>Вже маєте аккаунт? <a href="{% url 'login' %}">Увійти</a></p>
+        {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

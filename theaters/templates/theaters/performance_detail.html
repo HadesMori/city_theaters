@@ -5,17 +5,63 @@
 <link rel="stylesheet" type="text/css" href="{% static 'theaters/performance_detail.css' %}">
 {% endblock %}
 
-{% block content%}
-    <main class="performance-detail">
-        <h1>{{ performance.name }}</h1>
-        {% if performance.picture %}
-            <img src="{{ performance.picture }}" alt="Зображення вистави {{ performance.name }}">
-        {% endif %}
+{% block content %}
+<main class="performance-detail">
+    <h1 class="performance-title">{{ performance.name }}</h1>
+
+    {% if performance.picture %}
+        <div class="performance-image">
+            <img src="{{ performance.picture.url }}" alt="Зображення вистави {{ performance.name }}">
+        </div>
+    {% endif %}
+
+    <div class="performance-info">
         <p><strong>Жанр:</strong> {{ performance.genre }}</p>
-        <p><strong>Тривалість:</strong> {{ performance.duration }}</p>
+        <p><strong>Тривалість:</strong> {{ performance.duration }} хв</p>
         <p><strong>Дата та час:</strong> {{ performance.date_time|date:"d M Y, H:i" }}</p>
         <p><strong>Опис:</strong> {{ performance.description }}</p>
-        <p><strong>Театр:</strong> <a href="{% url 'theater_detail' performance.theater.pk %}">{{ performance.theater.name }}</a></p>
-        <a href="{% url 'select_seat' performance.performance_id %}">Купити квиток
-    </main>
+        <p><strong>Театр:</strong> 
+            <a href="{% url 'theater_detail' performance.theater.pk %}">
+                {{ performance.theater.name }}
+            </a>
+        </p>
+        <a class="btn-ticket" href="{% url 'select_seat' performance.performance_id %}">
+            Купити квиток
+        </a>
+    </div>
+
+    <section class="reviews">
+        <h2>Відгуки</h2>
+        <div class="reviews-list">
+            {% for review in reviews %}
+                <div class="review-item">
+                    <h2><strong>{{ review.user.username }}</strong></h2> 
+                    <p><strong>Рейтинг:</strong> {{ review.rating }} / 5</p>
+                    <p>{{ review.comment }}</p>
+                    {{ review.date|date:"d M Y, H:i" }}</h2>
+                </div>
+            {% empty %}
+                <p>Немає відгуків. Будьте першим, хто залишить відгук!</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="add-review">
+        <h3>Залишити відгук</h3>
+        {% if request.session.user_id %}
+            <form method="POST" class="review-form">
+                {% csrf_token %}
+                <label for="rating">Рейтинг (1-5):</label>
+                <input type="number" name="rating" id="rating" min="1" max="5" required>
+
+                <label for="comment">Коментар:</label>
+                <textarea name="comment" id="comment" required></textarea>
+
+                <button type="submit" class="btn-submit">Додати відгук</button>
+            </form>
+        {% else %}
+            <p>Щоб залишити відгук, будь ласка, <a href="{% url 'login' %}">увійдіть</a> в свій акаунт.</p>
+        {% endif %}
+    </section>
+</main>
 {% endblock %}

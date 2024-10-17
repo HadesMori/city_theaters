@@ -94,3 +94,93 @@ footer {
     background-color: #333;
     color: #fff;
 }
+
+/* Загальні стилі для форми */
+form {
+    background-color: #f9f9f9; /* Світлий фон для форми */
+    border: 1px solid #ddd; /* Світло-сіра рамка */
+    border-radius: 5px; /* Кутові закруглення */
+    padding: 20px; /* Внутрішні відступи */
+    margin-top: 20px; /* Відступ зверху */
+}
+
+/* Стиль для заголовка форми */
+form h3 {
+    margin-bottom: 15px; /* Відступ нижче заголовка */
+    color: #333; /* Темний колір тексту */
+}
+
+/* Стиль для полів вводу */
+form input[type="text"],
+form textarea,
+form select {
+    width: 100%; /* Заповнити ширину контейнера */
+    padding: 10px; /* Внутрішні відступи */
+    border: 1px solid #ccc; /* Світло-сіра рамка */
+    border-radius: 4px; /* Закруглені кути */
+    margin-bottom: 15px; /* Відступ знизу */
+    font-size: 16px; /* Розмір шрифту */
+}
+
+/* Стиль для кнопки відправки */
+form button {
+    background-color: #28a745; /* Зелений фон */
+    color: white; /* Білий текст */
+    border: none; /* Без рамки */
+    border-radius: 4px; /* Закруглені кути */
+    padding: 10px 15px; /* Внутрішні відступи */
+    font-size: 16px; /* Розмір шрифту */
+    cursor: pointer; /* Показує курсор як покажчик */
+    transition: background-color 0.3s; /* Анімація зміни фону */
+}
+
+/* Стиль для кнопки при наведенні */
+form button:hover {
+    background-color: #218838; /* Темніший зелений при наведенні */
+}
+
+.reviews {
+    margin: 2rem 0;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.reviews h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.review-item {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-item h2 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem;
+    color: #007bff;
+}
+
+.review-item p {
+    margin: 0.5rem 0;
+}
+
+.review-item strong {
+    color: #555;
+}
+
+.review-item:last-child {
+    margin-bottom: 0; /* Прибрати відступ у останнього відгуку */
+}

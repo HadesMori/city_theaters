@@ -16,6 +16,13 @@
             <h1>Театри міста</h1>
             <ul>
                 <li><a href="{% url 'performance_list' %}">Список вистав</a></li>
+
+                {% if username %}
+                    <li><a>{{ username }}</li>  {# Показуємо ім'я користувача #}
+                    <li><a href="{% url 'logout' %}">Вийти</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Увійти</a></li>
+                {% endif %}
                 <!-- Додайте інші посилання, якщо потрібно -->
             </ul>
         </nav>

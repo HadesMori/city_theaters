@@ -65,7 +65,7 @@ class Performance(models.Model):
 class Review(models.Model):
     review_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, models.CASCADE, blank=True, null=True)
-    performance = models.ForeignKey(Performance, models.CASCADE, blank=True, null=True)
+    performance = models.ForeignKey(Performance, models.CASCADE, blank=True, null=True, related_name="reviews")
     rating = models.SmallIntegerField(blank=True, null=True)
     comment = models.TextField(db_collation='Ukrainian_CI_AS', blank=True, null=True)
     date = models.DateTimeField(blank=True, null=True)
